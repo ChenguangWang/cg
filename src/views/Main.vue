@@ -2,7 +2,7 @@
   <div class="main-container">
     <a-anchor class="anchor" :offsetTop="40" :items="ANCHOR_DATA"></a-anchor>
 
-    <div class="content" :style="{ padding: '0 50px' }">
+    <div class="content">
       <!-- <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">Content</div> -->
       <div id="about" class="about-me">
         <a-card class="about-me-card">
@@ -20,10 +20,10 @@
               <a-list-item>{{ item }}</a-list-item>
             </template>
             <template #header>
-              <a-tag color="blue">Vue</a-tag>
-              <a-tag color="geekblue">TypeScript</a-tag>
-              <a-tag color="green">Angular</a-tag>
-              <a-tag color="blue">Java</a-tag>
+              <a-tag color="blue" class="skill-tags">Vue</a-tag>
+              <a-tag color="geekblue" class="skill-tags">TypeScript</a-tag>
+              <a-tag color="green" class="skill-tags">Angular</a-tag>
+              <a-tag color="blue" class="skill-tags">Java</a-tag>
             </template>
           </a-list>
         </a-card>
@@ -135,6 +135,7 @@ export default defineComponent({
   }
   .content {
     width: calc(100% - 240px);
+    padding: 0 50px;
   }
 }
 
@@ -144,9 +145,7 @@ export default defineComponent({
 }
 .about-me-card,
 .skills-card,
-.experience-card,
-.project-card,
-.contact-card {
+.experience-card {
   max-width: 600px;
   margin: 0 auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -160,7 +159,7 @@ export default defineComponent({
 }
 
 .skill-tags {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .timeline {
@@ -182,6 +181,18 @@ export default defineComponent({
   }
   :deep(.ant-timeline-item-last .ant-timeline-item-content) {
     min-height: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-container {
+    .content {
+      width: 100%;
+      padding: 0 24px;
+    }
+    .anchor {
+      display: none;
+    }
   }
 }
 </style>
