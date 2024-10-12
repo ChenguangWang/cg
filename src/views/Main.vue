@@ -1,6 +1,11 @@
 <template>
   <div class="main-container">
-    <a-anchor class="anchor" :offsetTop="40" :items="ANCHOR_DATA"></a-anchor>
+    <a-anchor
+      class="anchor"
+      :direction="anchorDirection"
+      :offsetTop="anchorDirection == 'horizontal' ? 0 : 40"
+      :items="ANCHOR_DATA"
+    ></a-anchor>
 
     <div class="content">
       <!-- <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">Content</div> -->
@@ -81,8 +86,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
-import LionImage from '@/assets/lion.png';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
+// import LionImage from '@/assets/lion.png';
+import LionImage from '@/assets/cg.jpeg';
 import { ClockCircleOutlined } from '@ant-design/icons-vue';
 import { ANCHOR_DATA } from './../settings/commonSettings';
 import Contact from '@/components/Contact.vue';
@@ -96,7 +102,8 @@ export default defineComponent({
     };
   },
   setup() {
-    const targetOffset = ref<number | undefined>(undefined);
+    // 锚点方向
+    const anchorDirection = ref('vertical');
 
     const skillsData: String[] = [
       '熟悉掌握W3C规范，具有编写良好风格规范代码的习惯',
@@ -111,10 +118,19 @@ export default defineComponent({
       '具备使用 Jenkins 集成 Git、Maven、Node.js 等工具的能力，确保项目构建、测试、部署流程自动化',
       '熟练使用Git及其工作流，合理管理分支提高敏捷开发',
     ];
+    const resizeFunc = () => {
+      anchorDirection.value = window.innerWidth <= 768 ? 'horizontal' : 'vertical';
+    };
+
     onMounted(() => {
-      targetOffset.value = window.innerHeight / 2;
+      resizeFunc();
+      window.addEventListener('resize', resizeFunc);
+    });
+    onUnmounted(() => {
+      window.removeEventListener('resize', resizeFunc);
     });
     return {
+      anchorDirection,
       selectedKeys: ref<string[]>(['about']),
       skillsData,
       ANCHOR_DATA,
@@ -178,6 +194,9 @@ export default defineComponent({
   }
   .company-time {
     color: #aaa;
+    min-width: 100px;
+    text-align: right;
+    white-space: nowrap;
   }
   :deep(.ant-timeline-item-last .ant-timeline-item-content) {
     min-height: 0;
@@ -186,12 +205,21 @@ export default defineComponent({
 
 @media screen and (max-width: 768px) {
   .main-container {
+    flex-direction: column;
+    align-items: center;
     .content {
       width: 100%;
-      padding: 0 24px;
+      padding: 20px 24px 24px;
     }
     .anchor {
-      display: none;
+      padding-top: 0;
+      padding: 10px;
+      background: #fff;
+      width: 100vw;
+      height: 40px;
+      position: fixed;
+      top: 0;
+      z-index: 1;
     }
   }
 }
