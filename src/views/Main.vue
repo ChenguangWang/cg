@@ -1,12 +1,12 @@
 <template>
   <div class="main-container">
-    <a-anchor class="anchor" :target-offset="targetOffset" :offsetTop="40" :items="ANCHOR_DATA"></a-anchor>
+    <a-anchor class="anchor" :offsetTop="40" :items="ANCHOR_DATA"></a-anchor>
 
     <div class="content" :style="{ padding: '0 50px' }">
       <!-- <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">Content</div> -->
       <div id="about" class="about-me">
         <a-card class="about-me-card">
-          <a-avatar :src="avatarUrl" size="large" :size="64" />
+          <a-avatar :src="avatarUrl" size="large" />
           <h2>hi，我是王晨光</h2>
           <!-- <p>具有Vue、Angular、Java 等工作经验的前端工程师。</p> -->
           <p>一只不太专业但却热爱前端的攻城狮。</p>
